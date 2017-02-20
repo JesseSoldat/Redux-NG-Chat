@@ -1,4 +1,5 @@
-import {
-	Reducer,
-	combineReducers
-} from 'redux';
+import { Reducer, combineReducers } from 'redux';
+
+export interface AppState {
+	
+}
