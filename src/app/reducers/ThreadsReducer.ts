@@ -59,8 +59,25 @@ export const ThreadsReducer =
       			[thread.id]: newThread
       		})
       	};
-
 			}
+    	// Select a particular thread in the UI
+    	case ThreadActions.SELECT_THREAD: {
+    		const thread = (<ThreadActions.SelectThreadActions>action).thread;
+    		const oldThread = state.entities[thread.id];
+
+    		//mark the messages as read
+    		const newMessages = oldThread.messages.map(
+    			(message) => Object.assign({}, message, { isRead: true }));
+
+    		return {
+    			ids: state.ids,
+    			currentThreadId: thread.id,
+    			entities: Object.assign({}, state.entities, {
+    				[thread.id]: newThread
+    			})
+    		};
+    	}
+
 
 			default:
 				return state;
