@@ -8,7 +8,7 @@ export interface ThreadsEntities {
 };
 
 export interface ThreadsState {
-	ids: string[];
+	ids: string[]; 
 	entities:  ThreadsEntities;
 	currentThreadId?: string;
 };
@@ -62,12 +62,17 @@ export const ThreadsReducer =
 			}
     	// Select a particular thread in the UI
     	case ThreadActions.SELECT_THREAD: {
-    		const thread = (<ThreadActions.SelectThreadActions>action).thread;
+    		const thread = (<ThreadActions.SelectThreadAction>action).thread;
     		const oldThread = state.entities[thread.id];
 
     		//mark the messages as read
     		const newMessages = oldThread.messages.map(
     			(message) => Object.assign({}, message, { isRead: true }));
+        
+        //give them to this new thread
+        const newThread = Object.assign({}, oldThread, {
+          messages: newMessages
+        });
 
     		return {
     			ids: state.ids,
@@ -83,3 +88,36 @@ export const ThreadsReducer =
 				return state;
 		}
 	}
+
+//selectors
+export const getThreadState = (state): ThreadsState => state.threads;
+
+export const getThreadsEntities = createSelector(
+  getThreadState,
+  (state: ThreadsState) => state.entities);
+
+export const getAllThreads = createSelector(
+  getThreadsEntities,
+  (entities: ThreadsEntities) => Object.keys(entities)
+                     .map((threadId) => entities[threadId]));
+
+export const getUnreadMessagesCount = createSelector(
+  getAllThreads,
+  (threads: Thread[]) => threads.reduce(
+    (unreadCount: number, thread: Thread) => {
+      thread.messages.forEach((message: Message) => {
+        if(!message.isRead){
+          ++unreadCount;
+        }
+      });
+      return unreadCount;
+    }, 0));
+
+
+// This selector emits the current thread
+export const getCurrentThread = createSelector(
+  getThreadsEntities,
+  getThreadState,
+  (entities: ThreadsEntities, state: ThreadsState) => {
+    entities[state.currentThreadId];
+  });

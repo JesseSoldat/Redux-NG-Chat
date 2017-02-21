@@ -23,7 +23,7 @@ export const addMessage: ActionCreator<AddMessageAction> =
 		const defaults = {
 			id: uuid(),
 			sentAt: new Date(),
-			isRead: false,
+			isRead: false, 
 			thread: thread
 		};
 		const message: Message = Object.assign({}, defaults, messageArgs);
