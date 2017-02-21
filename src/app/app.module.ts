@@ -7,10 +7,12 @@ import { AppStore } from './app.store';
 
 import { AppState, default as reducer } from './reducers';
 
+import { AppComponent } from './app.component';
 import ChatNavBar from './containers/ChatNavBar';
 import ChatThreads from './containers/ChatThreads';
+import ChatThread from './components/ChatThread';
 
-import { AppComponent } from './app.component';
+
 
 let devtools: StoreEnhancer<AppState> =
   window['devToolsExtension'] ?
@@ -25,7 +27,8 @@ let store: Store<AppState> = createStore<AppState>(
   declarations: [
     AppComponent,
     ChatNavBar,
-    ChatThreads
+    ChatThreads,
+    ChatThread
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@ export interface ThreadsState {
 const initialState: ThreadsState = {
 	ids: [],
 	currentThreadId: null,
-	entities: {}
+	entities: {} 
 };
 
 export const ThreadsReducer =
@@ -90,10 +90,10 @@ export const ThreadsReducer =
 	}
 
 //selectors
-export const getThreadState = (state): ThreadsState => state.threads;
+export const getThreadsState = (state): ThreadsState => state.threads;
 
 export const getThreadsEntities = createSelector(
-  getThreadState,
+  getThreadsState,
   (state: ThreadsState) => state.entities);
 
 export const getAllThreads = createSelector(
@@ -117,7 +117,13 @@ export const getUnreadMessagesCount = createSelector(
 // This selector emits the current thread
 export const getCurrentThread = createSelector(
   getThreadsEntities,
-  getThreadState,
-  (entities: ThreadsEntities, state: ThreadsState) => {
-    entities[state.currentThreadId];
-  });
+  getThreadsState,
+  (entities: ThreadsEntities, state: ThreadsState) =>
+    entities[state.currentThreadId]);
+
+export const getAllMessages = createSelector(
+  getAllThreads,
+  (threads: Thread[]) =>
+    threads.reduce(
+      (messages, thread) => [...messages, ...thread.messages],
+      []).sort((m1,m2) => m1.sentAt - m2.sentAt));
