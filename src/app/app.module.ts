@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import ChatNavBar from './containers/ChatNavBar';
 import ChatThreads from './containers/ChatThreads';
 import ChatThread from './components/ChatThread';
+import ChatWindow from './containers/ChatWindow';
+import ChatMessage from './components/ChatMessage';
 
 
 
@@ -28,7 +30,9 @@ let store: Store<AppState> = createStore<AppState>(
     AppComponent,
     ChatNavBar,
     ChatThreads,
-    ChatThread
+    ChatThread,
+    ChatWindow,
+    ChatMessage
   ],
   imports: [
     BrowserModule,

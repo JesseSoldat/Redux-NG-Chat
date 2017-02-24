@@ -1,7 +1,6 @@
 import { Action } from 'redux';
 import { User } from '../models';
 import { createSelector } from 'reselect';
-
 import { UserActions } from '../actions';
 
 export interface UsersState {
@@ -26,5 +25,9 @@ export const UsersReducer =
 	};
 
 export const getUsersState = (state): UsersState => state.users;
+
+export const getCurrentUser = createSelector(
+	getUsersState,
+	(state: UsersState) => state.currentUser );
 
 

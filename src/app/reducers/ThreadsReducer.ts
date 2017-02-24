@@ -109,7 +109,7 @@ export const getUnreadMessagesCount = createSelector(
         if(!message.isRead){
           ++unreadCount;
         }
-      });
+      }); 
       return unreadCount;
     }, 0));
 
